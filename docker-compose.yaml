@@ -27,6 +27,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Default=Host=db;Port=5432;Database=tasks;Username=postgres;Password=postgres;
 
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
     labels:
       - traefik.enable=true
       - traefik.http.routers.api.rule=PathPrefix(`/`)
